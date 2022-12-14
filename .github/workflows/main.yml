@@ -19,11 +19,13 @@ jobs:
           
       - name: Step 3 - Have GHA build the Maven Project
         run: mvn -B package --file pom.xml
+
+      - name: Step 4 - Set up a cache for Maven
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: $(( runner.os ))-m2-$(( hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
         
-      - name: Step 4 - List the current directory
-        run: ls -a
-        
-      - name: Step 5 - What is in target directory?
-        run: |
-          cd target
-          ls -a
+      - name: Step 5 - List the environment variables
+        run: env
